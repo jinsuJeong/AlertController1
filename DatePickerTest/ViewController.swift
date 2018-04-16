@@ -23,8 +23,28 @@ class ViewController: UIViewController {
     @objc func updateTime(){
         let date=Date()
         let formatter = DateFormatter()
-        formatter.dateFormat = "현재시간:yyyy-MM-dd HH:mm:ss a EE"
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss a EE"
         real.text = formatter.string(from: date)
+        
+        if(real.text==timeLabel.text)
+        {
+            view.backgroundColor=UIColor.red;
+            
+            let myAlert = UIAlertController(title: "알림", message: "설정된 시간이 되었습니다.", preferredStyle: UIAlertControllerStyle.alert)
+            
+            let okAction = UIAlertAction(title: "종료", style: .default, handler: {(action:UIAlertAction) -> Void in
+                self.view.backgroundColor=UIColor.yellow
+            })
+            
+            let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: {(action:UIAlertAction) -> Void in
+                self.view.backgroundColor=UIColor.green
+            })
+            
+            myAlert.addAction(okAction)
+            myAlert.addAction(cancelAction)
+            
+            present(myAlert, animated: true, completion: nil)
+        }
     }
     
     @IBAction func changeDatePicker(_ sender: Any) {
@@ -33,7 +53,7 @@ class ViewController: UIViewController {
         
         // dateFormat
         let formatter = DateFormatter()
-        formatter.dateFormat="선택시간:yyyy-MM-dd HH:mm:ss a EE"
+        formatter.dateFormat="yyyy-MM-dd HH:mm:ss a EE"
         timeLabel.text=formatter.string(from: myDatePicker.date)
         //timeLabel.text = String(describing: myDatePicker.date)
     }
